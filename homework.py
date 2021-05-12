@@ -77,11 +77,11 @@ class CashCalculator(Calculator):
 
         current_balance = round(self.get_balance_today() / cur_rate, 2)
 
-        if current_balance > 0 :
+        if current_balance > 0:
             return (f'На сегодня осталось {current_balance} '
                     f'{cur_name}')
 
-        if current_balance == 0 :
+        if current_balance == 0:
             return 'Денег нет, держись'
 
         return (f'Денег нет, держись: твой долг - {abs(current_balance)} '
@@ -118,20 +118,21 @@ class Record:
     comment: str
     date: Union[str, dt.datetime]
 
-    def __init__(self, amount, comment, date: Union[str, dt.datetime] ='') -> None:
+    def __init__(self, amount, comment, date: Union[str, dt.datetime] = ''
+                 ) -> None:
         self.amount = amount
         self.comment = comment
         self.date = self.convert_date(date)
 
     def convert_date(self, date: Union[str, dt.date]) -> dt.date:
-        if date == '' :
+        if date == '':
             return dt.date.today()
 
         date_format = '%d.%m.%Y'
         return dt.datetime.strptime(date, date_format).date()
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     cash_calculator = CashCalculator(1000)
     # дата в параметрах не указана,
     # так что по умолчанию к записи
@@ -141,8 +142,8 @@ if __name__ == '__main__':
     cash_calculator.add_record(Record(amount=300, comment='Серёге за обед'))
     # а тут пользователь указал дату, сохраняем её
     cash_calculator.add_record(Record(amount=3000,
-                                    comment='бар в Танин др',
-                                    date='08.11.2019'))
+                                      comment='бар в Танин др',
+                                      date='08.11.2019'))
 
     print(cash_calculator.get_today_cash_remained('rub'))
     print(cash_calculator.get_today_cash_remained('eur'))
